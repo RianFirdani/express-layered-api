@@ -14,6 +14,16 @@ app.get('/', async (req, res) => {
     res.send(data)
 })
 
+app.get('/:id' ,async (req,res)=>{
+    const {id} = req.params
+    const data = await prisma.product.findMany({
+        where : {
+            id
+        }
+    })
+    res.send(`Detail data dari ${id} data : ${data}`)
+})
+
 app.post('/', async (req, res) => {
     const { name, price, image } = req.body
     await prisma.product.create({
