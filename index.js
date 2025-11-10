@@ -14,15 +14,16 @@ app.get('/', async (req, res) => {
     res.send(data)
 })
 
-app.get('/:id' ,async (req,res)=>{
+app.get('/:id', async (req, res) => {
     const {id} = req.params
-    const data = await prisma.product.findMany({
-        where : {
-            id
-        }
+    await prisma.product.findFirst({
+      where : {
+        id : Number(id)
+      }
     })
-    res.send(`Detail data dari ${id} data : ${data}`)
-})
+    res.send(data)
+});
+
 
 app.post('/', async (req, res) => {
     const { name, price, image } = req.body
@@ -52,7 +53,7 @@ app.put('/:id', async (req, res) => {
 
     await prisma.product.update({
         where: {
-            id
+            id : Number(id)
         },
         data: {
             name,
